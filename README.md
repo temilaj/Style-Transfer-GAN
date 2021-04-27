@@ -39,7 +39,7 @@ For the StarGAN notebook, we used a selection of photos from the Celeb A-HQ data
 
 
 ## Neural Style Transfer
-This section will explore the work in`style_transfer_gan.ipynb`.  To understand how neural style transfer performs on different faces, we ran the notebook on three faces that we decided would provide enough difference in skin tone and facial structure.  For each face, we ran the notebook with each of the 10 art styles listed above. The general trend we noticed was that styles that were more similar to the person's face and their image backgrounds produced better results than styles that were very different.
+This section will explore the work in `style_transfer_gan.ipynb`.  To understand how neural style transfer performs on different faces, we fed multiple content images (faces) through our model and selected three that we decided would provide enough difference in skin tone and facial structure.  For each face, we used all 10 of the art styles listed above as our style reference images. The general trend we noticed was that styles that were more similar to the person's face and their image backgrounds produced better results than styles that were very different.
 
 For The Weeknd, we chose an image taken after he had undergone plastic surgery, thereby giving him a significantly different facial structure.  In his case, we saw that styles that were equally different from the norm, like cubism or surrealism, produced better results than a style like classicism (see below).
 
@@ -65,3 +65,34 @@ There are many reasons that Lady Gaga's face could have produced better results 
 
 ## StarGAN
 This section will explore the work in `StarGAN_v2_celeb_face_synthesizer.ipynb`.
+[StarGAN v2](https://github.com/clovaai/stargan-v2), the image translation model developed by Clova AI learns the mapping between different images. We used a  Star GAN network pre-trained with the CelebA-HQ dataset as well as a set of celebrity faces across different genders, skin tones, facial features and facial/body modifications (tattoos, and plastic surgery) as our source image dataset, and the CelebA-HQ dataset as our reference image dataset. Our source dataset was split into two domains: female and male
+
+The following is a list of source images we chose to synthesize.
+
+### Domain: Female
+
+Rochelle Humes             |  Ariana Grande            |    Lady Gaga     |    Jennifer Lawrence
+:-------------------------:|:-------------------------:|:------------------------:|:------------------------:|
+![Rochelle Humes](celebrity-faces/female/039913.jpg) |  ![Ariana Grande](celebrity-faces/female/ariana-grande.jpeg) | ![Lady Gaga](celebrity-faces/female/lady-gaga.jpg) | ![Jennifer Lawrence](celebrity-faces/female/jennifer-lawrence.jpg) 
+
+
+### Domain: male
+Chris Hemsworth             |  Mike Tyson        |    Donald Trump               |    The Weeknd     |    Wesley Snipes
+:-------------------------:|:-------------------------:|:------------------------:|:------------------------:|:------------------------:|
+![Chris Hemsworth](celebrity-faces/male/chris-hemsworth.jpg) |  ![Mike Tyson](celebrity-faces/male/mike-tyson.png) | ![Donald Trump](celebrity-faces/male/portrait-Donald-Trump.jpeg) | ![The Weeknd](celebrity-faces/male/the-weeknd.jpeg)  | ![Wesley Snipes](celebrity-faces/male/wesley-snipes.jpg)
+
+
+We transformed all selected images by cropping the image to a ratio as approximately 1:1  as possible, with the face at the center, and occupying a large portion of the image. We then finetuned the image for additional fine rotation and cropping using the built-in tool provided by Clova AI . 
+Finally,we fed these finetune images to the pretrained StarGAN network and generated synthesized output images. 
+
+
+### Results
+
+Our results showed that 
+Distinct facial features such as strong jawlines and lips were propagated across different genders and skin tones into the generated/output images.
+For faces like The Weeknd’s that have undergone facial modifications (e.g. plastic surgery) We noticed these features also remained distinct in the generated images. However the generated images weren’t so realistic
+As expected, high-level features such as hairstyle, makeup, beard and skintone are followed from the reference images. However other features such as tattoos seemed to be preserved from the source image
+Similarly, The model preserved the pose and identity of the source images in most output images
+
+The result of our expriement is shown below
+![Star GAN result](stargan-result/reference.jpg) 
